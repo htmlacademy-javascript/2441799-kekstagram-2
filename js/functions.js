@@ -18,7 +18,7 @@ console.log (checkLength1 ('проверяемая строка', 10));
 
 //Функции для проверки, является ли строка палиндромом
 function checkPalindrome (value) {
-  const string = value.replaceAll('').toLowerCase();
+  const string = value.replaceAll(' ','').toLowerCase();
   let str = '';
   for (let i = string.length - 1; i >= 0; i--) {
     str += string[i];
