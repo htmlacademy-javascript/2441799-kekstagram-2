@@ -2,9 +2,9 @@
 
 function checkLength1 (string, length) {
   if (string.length <= length) {
-    return (true);
+    return true;
   } else {
-    return (false);
+    return false;
   }
 };
 
@@ -16,5 +16,13 @@ console.log (checkLength1 ('проверяемая строка',18));
 console.log (checkLength1 ('проверяемая строка', 10));
 
 
-
 //Функции для проверки, является ли строка палиндромом
+function checkPalindrome (value) {
+  const string = value.replaceAll().toLowerCase ();
+  const str = '';
+  for (let i = 0; i < string.length; i--) {
+
+  }
+};
+
+console.log (checkPalindrome('овод'));
