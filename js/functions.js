@@ -1,9 +1,7 @@
 //Функции для проверки длины строки
-const string = 'проверяемая строка';
-const len = string.length;
 
-function checkLength1 (length) {
-  if (len <= length) {
+function checkLength1 (string, length) {
+  if (string.length <= length) {
     return (true);
   } else {
     return (false);
@@ -11,11 +9,11 @@ function checkLength1 (length) {
 };
 
 // Строка короче 20 символов
-console.log (checkLength1 (20));
+console.log (checkLength1 ('проверяемая строка', 20));
 // Длина строки ровно 18 символов
-console.log (checkLength1 (18));
+console.log (checkLength1 ('проверяемая строка',18));
 // Строка длиннее 10 символов
-console.log (checkLength1 (10));
+console.log (checkLength1 ('проверяемая строка', 10));
 
 
 
