@@ -1,11 +1,7 @@
 //Функции для проверки длины строки
 
 function checkLength1 (string, length) {
-  if (string.length <= length) {
-    return true;
-  } else {
-    return false;
-  }
+  return string.length <= length ? 'Да' : 'Нет';
 }
 
 // Строка короче 20 символов
