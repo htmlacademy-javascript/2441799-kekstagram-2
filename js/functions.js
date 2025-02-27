@@ -22,23 +22,8 @@ function checkPalindrome (value) {
   let str = '';
   for (let i = string.length - 1; i >= 0; i--) {
     str += string[i];
-    if (str === string) {
-      return 'Строка является палиндромом';
-    } else {
-      return 'Строка не является палиндромом';
-    }
   }
+  return str === string ? 'Строка является палиндромом' : 'Строка не является палиндромом'
 }
 
-console.log (checkPalindrome('довод'));
-
-/*function checkPalindrome1 (value) {
-  const string = value.replaceAll('').toLowerCase();
-  if (string === value.split('').reverse().join('')) {
-    return 'Строка является палиндромом';
-  } else {
-    return 'Строка не является палиндромом';
-  }
-}
-
-console.log (checkPalindrome1('анна'));*/
+console.log (checkPalindrome('Довод'));
