@@ -22,7 +22,7 @@ const NAMES = [
   'Ольга'
 ];
 
-const DESCRIPTION = [
+/*const DESCRIPTIONS = [
   'Природа',
   'Животные',
   'Города',
@@ -31,7 +31,7 @@ const DESCRIPTION = [
   'Работа',
   'Друзья',
   'Машина',
-];
+];*/
 
 // Функция получения случайного числа
 const getRandomInteger = (a, b) => {
@@ -43,29 +43,73 @@ return () => {
     //Исключение повторения значений предыдущего вызова
     if (previousResult !== result) {
       previousResult = result;
-      return result
+      return result;
     } return result === upper ? lower : result + 1;
 }
 };
 
 //Функция поиска случайного элемента в массиве
-cons getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)]
+const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
-// Функция, создает объект, который описывает фото
-const photo = () => {
-  return {
-      id: getRandomInteger(1, 25),
-      url: photos/{{id}}.jpg,
-      description: getRandomArrayElement(DESCRIPTION),
-      likes: getRandomInteger(1, 25),
-      comments: getRandomArrayElement(MESSAGES),
-      avatar: img/avatar-{{getRandomInteger(1, 6)}},
-      message: '',
-      name: '',
+/*//Функция, создает объект comments
+const createComments = () => {
+  let id = 1;
+  const messageArray = MESSAGES;
+  const nameArray = NAMES;
+  const indexMessageArray = getRandomInteger (0, messageArray.length - 1);
+  const indexNameArray = getRandomInteger (0, nameArray.length - 1);
+
+  return () => {
+    const comment = {};
+    const idAvatar = getRandomInteger (1, 6);
+    comment.id = id;
+    comment.avatar = `img/avatar-${idAvatar()}.svg`;
+    comment.message = `${messageArray[indexMessageArray()]}`;
+    comment.name = `${nameArray[indexNameArray()]}`;
+    id++;
+    return comment;
+  };
+};*/
+
+//Функция, создает объект comments
+const createComments = () => {
+  let id = 1;
+
+  return () => {
+    const comment = {};
+    const idAvatar = getRandomInteger (1, 6);
+    comment.id = id;
+    comment.avatar = `img/avatar-${idAvatar()}.svg`;
+    comment.message = `${getRandomArrayElement(MESSAGES)}`;
+    comment.name = `${getRandomArrayElement(NAMES)}`;
+    id++;
+    return comment;
   };
 };
 
-// Описание фото, Массив
-const getDescriptionPhoto = Array.from ({length: 25}, photo);
 
-console.log(getDescriptionPhoto);
+//Получаем количество комментариев
+const numComments = getRandomInteger(0, 30);
+//Получаем колличество лайков
+const numLikes = getRandomInteger(15, 200);
+
+const getPhoto = () => {
+  let id = 1;
+  return () => {
+    const photo = {};
+
+    photo.id = id;
+    photo.url = `photo/${id}.jpg`;
+    photo.description = `Фото ${id}`;
+    photo.likes = Math.floor(numLikes ());
+
+    //Список комментариев
+    photo.comments = Array.from({length: numComments()}, createComments());
+    id++;
+    return photo;
+  };
+};
+
+const photoArray = Array.from({length: 25}, getPhoto());
+
+console.log(photoArray);
