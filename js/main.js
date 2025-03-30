@@ -22,7 +22,7 @@ const NAMES = [
   'Ольга'
 ];
 
-/*const DESCRIPTIONS = [
+const DESCRIPTIONS = [
   'Природа',
   'Животные',
   'Города',
@@ -31,45 +31,29 @@ const NAMES = [
   'Работа',
   'Друзья',
   'Машина',
-];*/
+];
 
 // Функция получения случайного числа
 const getRandomInteger = (a, b) => {
-const lower = Math.ceil(Math.min(a, b));
-const upper = Math.floor(Math.max(a, b));
-let previousResult = -1;
-return () => {
-    const result = Math.random() * (upper - lower + 1) + lower;
-    //Исключение повторения значений предыдущего вызова
-    if (previousResult !== result) {
-      previousResult = result;
-      return result;
-    } return result === upper ? lower : result + 1;
-}
+  const lower = Math.ceil(Math.min(a, b));
+  const upper = Math.floor(Math.max(a, b));
+  let previousResult = -1;
+
+  return () => {
+    let result;
+    do {
+      result = Math.floor(Math.random() * (upper - lower + 1)) + lower;
+    } while (result === previousResult); // Исключаем повторение
+    previousResult = result; // Запоминаем предыдущее значение
+    return result;
+  };
 };
 
 //Функция поиска случайного элемента в массиве
-const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
-
-/*//Функция, создает объект comments
-const createComments = () => {
-  let id = 1;
-  const messageArray = MESSAGES;
-  const nameArray = NAMES;
-  const indexMessageArray = getRandomInteger (0, messageArray.length - 1);
-  const indexNameArray = getRandomInteger (0, nameArray.length - 1);
-
-  return () => {
-    const comment = {};
-    const idAvatar = getRandomInteger (1, 6);
-    comment.id = id;
-    comment.avatar = `img/avatar-${idAvatar()}.svg`;
-    comment.message = `${messageArray[indexMessageArray()]}`;
-    comment.name = `${nameArray[indexNameArray()]}`;
-    id++;
-    return comment;
-  };
-};*/
+const getRandomArrayElement = (elements) => {
+  const randomIndex = getRandomInteger(0, elements.length - 1)(); // Вызываем сразу
+  return elements[randomIndex];
+};
 
 //Функция, создает объект comments
 const createComments = () => {
@@ -87,7 +71,6 @@ const createComments = () => {
   };
 };
 
-
 //Получаем количество комментариев
 const numComments = getRandomInteger(0, 30);
 //Получаем колличество лайков
@@ -100,7 +83,7 @@ const getPhoto = () => {
 
     photo.id = id;
     photo.url = `photo/${id}.jpg`;
-    photo.description = `Фото ${id}`;
+    photo.description = `${getRandomArrayElement(DESCRIPTIONS)}`;
     photo.likes = Math.floor(numLikes ());
 
     //Список комментариев
