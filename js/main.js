@@ -1,2 +1,2 @@
 import {photoArray} from "./data";
-console,console.log(photoArray);
+console.log(photoArray);
