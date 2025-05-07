@@ -3,17 +3,18 @@ import { photoArray } from "../data";
 //получаем шаблон карточки фотографии
 const template = document.querySelector('#picture').content.querySelector('.picture');
 
-//получает первое фото массива
-const photo = photoArray[0];
+photoArray.forEach ((photo) => {
+  const thumbnail = template.cloneNode (true);
+  //заполнить данные
+  const image = thumbnail.querySelector('.picture__img');
 
-//заполнить данные
-const image = template.querySelector('.picture__img');
-image.src = photo.url;
-image.alt = photo.description;
+  image.src = photo.url;
+  image.alt = photo.description;
 
-template.querySelector('.picture__likes').textContent = photo.likes;
-template.querySelector('.picture__comments').textContent = photo.comments.length;
+  thumbnail.querySelector('.picture__likes').textContent = photo.likes;
+  thumbnail.querySelector('.picture__comments').textContent = photo.comments.length;
 
 //добавить карточку в контейнер
 const container = document.querySelector('.pictures');
-container.appendChild(template);
+container.appendChild(thumbnail);
+});
