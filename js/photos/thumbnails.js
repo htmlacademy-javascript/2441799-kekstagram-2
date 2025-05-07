@@ -1,11 +1,11 @@
 import { photoArray } from "../data";
 
-//получаем шаблон карточки фотографии
 const template = document.querySelector('#picture').content.querySelector('.picture');
+const container = document.querySelector('.pictures');
 
-photoArray.forEach ((photo) => {
-  const thumbnail = template.cloneNode (true);
+const createThumbnail = (photo) => {
   //заполнить данные
+  const thumbnail = template.cloneNode (true);
   const image = thumbnail.querySelector('.picture__img');
 
   image.src = photo.url;
@@ -14,7 +14,14 @@ photoArray.forEach ((photo) => {
   thumbnail.querySelector('.picture__likes').textContent = photo.likes;
   thumbnail.querySelector('.picture__comments').textContent = photo.comments.length;
 
-//добавить карточку в контейнер
-const container = document.querySelector('.pictures');
-container.appendChild(thumbnail);
+  return thumbnail;
+};
+
+const fragment = document.createDocumentFragment();
+photoArray.forEach ((photo) => {
+  const thumbnail = createThumbnail(photo);
+  fragment.appendChild(thumbnail);
 });
+
+container.appendChild(fragment);
+
