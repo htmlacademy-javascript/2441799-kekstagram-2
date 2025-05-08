@@ -63,7 +63,7 @@ const getPhoto = () => {
     const photo = {};
 
     photo.id = id;
-    photo.url = `photo/${id}.jpg`;
+    photo.url = `photos/${id}.jpg`;
     photo.description = `${getRandomArrayElement(DESCRIPTIONS)}`;
     photo.likes = Math.floor(numLikes ());
 
