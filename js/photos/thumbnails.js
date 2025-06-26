@@ -2,24 +2,18 @@ import { photoArray } from "../data";
 
 const template = document.querySelector('#picture').content.querySelector('.picture');
 const container = document.querySelector('.pictures');
-
-const createThumbnail = (photo) => {
-  //заполнить данные
-  const thumbnail = template.cloneNode (true);
-  const image = thumbnail.querySelector('.picture__img');
-
-  image.src = photo.url;
-  image.alt = photo.description;
-
-  thumbnail.querySelector('.picture__likes').textContent = photo.likes;
-  thumbnail.querySelector('.picture__comments').textContent = photo.comments.length;
-
-  return thumbnail;
-};
-
 const fragment = document.createDocumentFragment();
-photoArray.forEach ((photo) => {
-  const thumbnail = createThumbnail(photo);
+
+photoArray.forEach (({id, url, description, comments, likes}) => {
+  const thumbnail = template.cloneNode (true);
+
+  thumbnail.dataset.pictureId = id;
+  const image = thumbnail.querySelector('.picture__img');
+  image.src = url;
+  image.alt = description;
+  thumbnail.querySelector('.picture__likes').textContent = likes;
+  thumbnail.querySelector('.picture__comments').textContent = comments.length;
+
   fragment.appendChild(thumbnail);
 });
 
