@@ -25,3 +25,4 @@ photoArray.forEach ((photo) => {
 
 container.appendChild(fragment);
 
+export {container};
