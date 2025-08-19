@@ -1,22 +1,29 @@
 import { photoArray } from "../data";
+import { openBigPicture } from "./fullphoto";
 
-const template = document.querySelector('#picture').content.querySelector('.picture');
-const container = document.querySelector('.pictures');
-const fragment = document.createDocumentFragment();
+const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
+const pictures = document.querySelector('.pictures');
+const picturesFragment = document.createDocumentFragment();
 
 photoArray.forEach (({id, url, description, comments, likes}) => {
-  const thumbnail = template.cloneNode (true);
+  const picture = pictureTemplate.cloneNode (true);
 
-  thumbnail.dataset.pictureId = id;
-  const image = thumbnail.querySelector('.picture__img');
+  picture.dataset.pictureId = id;
+  const image = picture.querySelector('.picture__img');
   image.src = url;
   image.alt = description;
-  thumbnail.querySelector('.picture__likes').textContent = likes;
-  thumbnail.querySelector('.picture__comments').textContent = comments.length;
+  picture.querySelector('.picture__likes').textContent = likes;
+  picture.querySelector('.picture__comments').textContent = comments.length;
 
-  fragment.appendChild(thumbnail);
+  //обработчик клика
+  picture.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    openBigPicture(id);
+  });
+
+  picturesFragment.appendChild(picture);
 });
 
-container.appendChild(fragment);
+pictures.appendChild(picturesFragment);
 
-export {container};
+export {pictures};
