@@ -4,7 +4,7 @@ const imgUploadInput = imgUploadForm.querySelector ('.img-upload__input');
 const imgUploadOverlay = imgUploadForm.querySelector ('.img-upload__overlay');
 const body = document.querySelector ('body');
 
-const openModal = () => {
+const openModalEditor = () => {
   imgUploadInput.addEventListener ('change', () => {
     imgUploadOverlay.classList.remove ('hidden');
     body.classList.add ('modal-open');
