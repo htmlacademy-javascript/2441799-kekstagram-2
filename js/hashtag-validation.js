@@ -28,3 +28,8 @@ const validateHashtagUnique = (value) => {
   const hashtagsUnique = new Set(hashtags);
   return hashtags.length === hashtagsUnique.size;
 };
+
+export {validateHashtagFormat};
+export {validateHashtagCount};
+export {validateHashtagUnique};
+

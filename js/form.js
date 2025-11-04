@@ -1,3 +1,5 @@
+import {validateHashtagFormat, validateHashtagCount, validateHashtagUnique} from "./hashtag-validation";
+
 const imgUploadForm = document.querySelector ('.img-upload__form');
 const imgUploadInput = imgUploadForm.querySelector ('.img-upload__input');
 const imgUploadOverlay = imgUploadForm.querySelector ('.img-upload__overlay');
@@ -40,3 +42,7 @@ const openModalEditor = () => {
 };
 
 openModalEditor ();
+
+pristine.addvalidator (textHashtags, validateHashtagFormat, 'Введён невалидный хэштег: хештэг должен начинаться с #, состоять из букв (латиница и кириллица) и цифр, длинна от 1 до 19 символов, не содержит пробелов или спецсимволов');
+pristine.addvalidator (textHashtags, validateHashtagCount, 'Превышено количество хэштегов, можно указать не более ${MAX_HASHTAG_COUNT}');
+pristine.addvalidator (textHashtags, validateHashtagUnique, 'Хештеги не должны повторяться')ж
