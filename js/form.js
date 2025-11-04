@@ -1,4 +1,3 @@
-
 const imgUploadForm = document.querySelector ('.img-upload__form');
 const imgUploadInput = imgUploadForm.querySelector ('.img-upload__input');
 const imgUploadOverlay = imgUploadForm.querySelector ('.img-upload__overlay');
@@ -6,6 +5,12 @@ const body = document.querySelector ('body');
 const imgUploadCancel = imgUploadForm.querySelector ('.img-upload__cancel');
 const textHashtags = imgUploadForm.querySelector ('.text__hashtags');
 const textComment = imgUploadForm.querySelector ('.text__description');
+
+const pristine = new Pristine (imgUploadForm, {
+  classTo: 'img-upload__field-wrapper',
+  errorClass: 'img-upload__field-wrapper--error',
+  errorTextParent: 'img-upload__field-wrapper',
+});
 
 const onModalEditorCancelClick = () => {
   closeModalEditor();
@@ -35,9 +40,3 @@ const openModalEditor = () => {
 };
 
 openModalEditor ();
-
-const pristine = new Pristine (imgUploadForm, {
-  classTo: 'img-upload__field-wrapper',
-  errorClass: 'img-upload__field-wrapper--error',
-  errorTextParent: 'img-upload__field-wrapper',
-});
