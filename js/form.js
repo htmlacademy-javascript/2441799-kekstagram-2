@@ -1,4 +1,5 @@
-import {validateHashtagFormat, validateHashtagCount, validateHashtagUnique} from './hashtag-validation.js';
+import {validateHashtagFormat, validateHashtagCount, validateHashtagUnique, MAX_HASHTAG_COUNT} from './hashtag-validation.js';
+import {validateCommentLength, MAX_COMMENT_LENGTH} from './comment-validation.js';
 
 const imgUploadForm = document.querySelector ('.img-upload__form');
 const imgUploadInput = imgUploadForm.querySelector ('.img-upload__input');
@@ -44,5 +45,32 @@ const openModalEditor = () => {
 openModalEditor ();
 
 pristine.addvalidator (textHashtags, validateHashtagFormat, 'Введён невалидный хэштег: хештэг должен начинаться с #, состоять из букв (латиница и кириллица) и цифр, длинна от 1 до 19 символов, не содержит пробелов или спецсимволов');
-pristine.addvalidator (textHashtags, validateHashtagCount, 'Превышено количество хэштегов, можно указать не более 5');
+pristine.addvalidator (textHashtags, validateHashtagCount, `Превышено количество хэштегов, можно указать не более ${MAX_HASHTAG_COUNT}`);
 pristine.addvalidator (textHashtags, validateHashtagUnique, 'Хештеги не должны повторяться');
+pristine.addvalidator (textComment, validateCommentLength, `Комментарий не должен превышать ${MAX_COMMENT_LENGTH} символов`);
+
+imgUploadForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  const isValid = pristine.validate();
+
+  if (isValid) {
+    console.log ('Форма прошла проверку');
+    imgUploadForm.submit();
+  } else {
+    console.log ('Форма не прошла проверку');
+  }
+});
+
+// если фокус находится в поле ввода хэштега, нажатие на Esc не должно приводить к закрытию формы редактирования изображения.
+textHashtags.addEventListener('keydown', (evt) => {
+  if (evt.key === 'Escape' || evt.key === 'Esc') {
+    evt.stopPropagation();
+  }
+});
+
+//если фокус находится в поле ввода комментария, нажатие на Esc не должно приводить к закрытию формы редактирования изображения.
+textComment.addEventListener('keydown', (evt) => {
+  if (evt.key === 'Escape' || evt.key === 'Esc') {
+    evt.stopPropagation();
+  }
+});

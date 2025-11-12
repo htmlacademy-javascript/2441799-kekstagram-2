@@ -1,6 +1,5 @@
 const HASHTAG_REGEX = /^#[a-zа-яё0-9]{1,19}$/i; //регулярное выражени - начинается с #, буквы и цифры, не длиннее 20 символов включая #, не может быть только одна #
 const MAX_HASHTAG_COUNT = 5; //максимум 5 хештегов
-const MAX_HASHTAG_LENGTH = 20;
 
 //функция, возвращает массив хештэгов, убирает пробелы в начале и в конце строки, разбиваем строку по одному или несколькими пробелами, убираем пустые элементы
 const hashtagsArray = (value) => {
@@ -32,4 +31,5 @@ const validateHashtagUnique = (value) => {
 export {validateHashtagFormat};
 export {validateHashtagCount};
 export {validateHashtagUnique};
+export {MAX_HASHTAG_COUNT};
 
