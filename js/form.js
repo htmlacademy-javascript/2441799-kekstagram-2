@@ -108,4 +108,29 @@ function showMessageLoading (template) {
   if (button) {
     button.addEventListener('click', closeMessage);
   }
-};
+}
+
+//функция отправки формы
+imgUploadForm.addEventListener('submit', (evt) => {
+  evt.preventDefault ();
+
+  if (!pristine.validate()) {
+    return;
+  }
+
+  const imgUploadFormData = new imgUploadFormData(imgUploadForm);
+
+  fetch('https://31.javascript.htmlacademy.pro/kekstagram', {
+    method: 'POST',
+    body: imgUploadFormData
+  }) .then(response => {
+    if (response.ok) {
+      closeModalEditor();
+      showMessageLoading(successMessage);
+    } else {
+      showMessageLoading(errorMessage);
+    }
+  }).catch(() => {
+    showMessageLoading (errorMessage);
+  });
+});
