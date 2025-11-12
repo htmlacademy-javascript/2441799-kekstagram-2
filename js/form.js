@@ -52,18 +52,6 @@ pristine.addValidator (textHashtags, validateHashtagCount, `Превышено �
 pristine.addValidator (textHashtags, validateHashtagUnique, 'Хештеги не должны повторяться');
 pristine.addValidator (textComment, validateCommentLength, `Комментарий не должен превышать ${MAX_COMMENT_LENGTH} символов`);
 
-imgUploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  const isValid = pristine.validate();
-
-  if (isValid) {
-    console.log ('Форма прошла проверку');
-    imgUploadForm.submit();
-  } else {
-    console.log ('Форма не прошла проверку');
-  }
-});
-
 // если фокус находится в поле ввода хэштега, нажатие на Esc не должно приводить к закрытию формы редактирования изображения.
 textHashtags.addEventListener('keydown', (evt) => {
   if (evt.key === 'Escape' || evt.key === 'Esc') {
@@ -112,18 +100,18 @@ function showMessageLoading (template) {
 
 //функция отправки формы
 imgUploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault ();
+  evt.preventDefault();
 
   if (!pristine.validate()) {
     return;
   }
 
-  const imgUploadFormData = new imgUploadFormData(imgUploadForm);
+  const imgUploadFormData = new FormData(imgUploadForm);
 
   fetch('https://31.javascript.htmlacademy.pro/kekstagram', {
     method: 'POST',
     body: imgUploadFormData
-  }) .then(response => {
+  }).then((response) => {
     if (response.ok) {
       closeModalEditor();
       showMessageLoading(successMessage);
