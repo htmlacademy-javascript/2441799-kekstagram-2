@@ -3,7 +3,7 @@ const MAX_HASHTAG_COUNT = 5; //максимум 5 хештегов
 
 //функция, возвращает массив хештэгов, убирает пробелы в начале и в конце строки, разбиваем строку по одному или несколькими пробелами, убираем пустые элементы
 const hashtagsArray = (value) => {
-  value.trim().split(/\s+/).filter((tag) => tag.length > 0);
+  return value.trim().split(/\s+/).filter((tag) => tag.length > 0);
 };
 
 //проверка формата хештэга
