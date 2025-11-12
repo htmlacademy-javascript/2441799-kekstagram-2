@@ -8,6 +8,9 @@ const body = document.querySelector ('body');
 const imgUploadCancel = imgUploadForm.querySelector ('.img-upload__cancel');
 const textHashtags = imgUploadForm.querySelector ('.text__hashtags');
 const textComment = imgUploadForm.querySelector ('.text__description');
+const successMessage = document.querySelector ('#success').content.querySelector('.success');
+const errorMessage = document.querySelector ('#data-error').content.querySelector('.data-error');
+
 
 const pristine = new Pristine (imgUploadForm, {
   classTo: 'img-upload__field-wrapper',
@@ -74,3 +77,35 @@ textComment.addEventListener('keydown', (evt) => {
     evt.stopPropagation();
   }
 });
+
+//функция для сообщения об ошибках
+function showMessageLoading (template) {
+  const message = template.cloneNode(true); //клонирование шаблона сообщения
+  body.appendChild(message); //добавить на страницу беред </body>
+
+  const onEscKeydownMessage = (evt) => {
+    if (evt.key === 'Escape') {
+      close ();
+    }
+  };
+
+  const onClickOutsideMessage = (evt) => {
+    if (!message.contains(evt.target)) {
+      close ();
+    }
+  };
+
+  const button = message.querySelector('.success__button') || message.querySelector('.error__button');
+  const closeMessage = () => {
+    message.remove ();
+    document.removeEventListener('keydown', onEscKeydownMessage);
+    document.removeEventListener('click', onClickOutsideMessage);
+  };
+
+  document.addEventListener('keydown', onEscKeydownMessage);
+  document.addEventListener('click', onClickOutsideMessage);
+
+  if (button) {
+    button.addEventListener('click', closeMessage);
+  }
+};
