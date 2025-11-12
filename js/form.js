@@ -44,10 +44,10 @@ const openModalEditor = () => {
 
 openModalEditor ();
 
-pristine.addvalidator (textHashtags, validateHashtagFormat, 'Введён невалидный хэштег: хештэг должен начинаться с #, состоять из букв (латиница и кириллица) и цифр, длинна от 1 до 19 символов, не содержит пробелов или спецсимволов');
-pristine.addvalidator (textHashtags, validateHashtagCount, `Превышено количество хэштегов, можно указать не более ${MAX_HASHTAG_COUNT}`);
-pristine.addvalidator (textHashtags, validateHashtagUnique, 'Хештеги не должны повторяться');
-pristine.addvalidator (textComment, validateCommentLength, `Комментарий не должен превышать ${MAX_COMMENT_LENGTH} символов`);
+pristine.addValidator (textHashtags, validateHashtagFormat, 'Введён невалидный хэштег: хештэг должен начинаться с #, состоять из букв (латиница и кириллица) и цифр, длинна от 1 до 19 символов, не содержит пробелов или спецсимволов');
+pristine.addValidator (textHashtags, validateHashtagCount, `Превышено количество хэштегов, можно указать не более ${MAX_HASHTAG_COUNT}`);
+pristine.addValidator (textHashtags, validateHashtagUnique, 'Хештеги не должны повторяться');
+pristine.addValidator (textComment, validateCommentLength, `Комментарий не должен превышать ${MAX_COMMENT_LENGTH} символов`);
 
 imgUploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
