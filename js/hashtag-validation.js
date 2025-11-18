@@ -15,7 +15,7 @@ const validateHashtagFormat = (value) => {
   return hashtags.every((tag) => HASHTAG_REGEX.test(tag)); //проверяем каждый хештег на соответствие регулярного выражения
 };
 
-//проверка кол-ва хештегов, возвращает true если кол-во хештнгов меньше или равно MAX_HASHTAG_COUNT
+//проверка количества хештегов, возвращает true если кол-во хештнгов меньше или равно MAX_HASHTAG_COUNT
 const validateHashtagCount = (value) => {
   const hashtags = hashtagsArray(value);
   return hashtags.length <= MAX_HASHTAG_COUNT;
