@@ -1,4 +1,6 @@
-import {photoArray} from "./data";
-console.log(photoArray);
+import {photoArray} from "./data.js";
+import {renderCards} from "./photos/thumbnails.js";
+import './form.js';
 
-import './photos/thumbnails.js';
+console.log (photoArray);
+renderCards(photoArray);

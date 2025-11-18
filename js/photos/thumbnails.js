@@ -1,27 +1,32 @@
-import { photoArray } from "../data";
+import { openBigPicture } from "./fullphoto.js";
 
-const template = document.querySelector('#picture').content.querySelector('.picture');
-const container = document.querySelector('.pictures');
+const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
+const pictures = document.querySelector('.pictures');
+const picturesFragment = document.createDocumentFragment();
 
-const createThumbnail = (photo) => {
-  //заполнить данные
-  const thumbnail = template.cloneNode (true);
-  const image = thumbnail.querySelector('.picture__img');
+let localPhotos;
 
-  image.src = photo.url;
-  image.alt = photo.description;
+export const renderCards = (photos) => {
+  localPhotos = [...photos];
+  photos.forEach(({id, url, description, comments, likes}) => {
+    const picture = pictureTemplate.cloneNode (true);
+    picture.dataset.pictureId = id;
+    const image = picture.querySelector('.picture__img');
+    image.src = url;
+    image.alt = description;
+    picture.querySelector('.picture__likes').textContent = likes;
+    picture.querySelector('.picture__comments').textContent = comments.length;
 
-  thumbnail.querySelector('.picture__likes').textContent = photo.likes;
-  thumbnail.querySelector('.picture__comments').textContent = photo.comments.length;
-
-  return thumbnail;
+    picturesFragment.appendChild(picture)
+  });
+  pictures.appendChild(picturesFragment);
 };
 
-const fragment = document.createDocumentFragment();
-photoArray.forEach ((photo) => {
-  const thumbnail = createThumbnail(photo);
-  fragment.appendChild(thumbnail);
+pictures.addEventListener('click', (evt) => {
+  const currentPicture = evt.target.closest('.picture');
+  if(!currentPicture) return;
+
+  const pictureId = Number(currentPicture.dataset.pictureId);
+  const currentPhoto = localPhotos.find((photo) => photo.id === pictureId);
+  openBigPicture(currentPhoto);
 });
-
-container.appendChild(fragment);
-
