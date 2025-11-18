@@ -28,8 +28,4 @@ const validateHashtagUnique = (value) => {
   return hashtags.length === hashtagsUnique.size;
 };
 
-export {validateHashtagFormat};
-export {validateHashtagCount};
-export {validateHashtagUnique};
-export {MAX_HASHTAG_COUNT};
-
+export {validateHashtagFormat, validateHashtagCount, validateHashtagUnique, MAX_HASHTAG_COUNT};

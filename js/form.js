@@ -11,6 +11,11 @@ const textComment = imgUploadForm.querySelector ('.text__description');
 const successMessage = document.querySelector ('#success').content.querySelector('.success');
 const errorMessage = document.querySelector ('#data-error').content.querySelector('.data-error');
 
+const onClickOutsideEditor = (evt) => {
+  if (evt.target === imgUploadOverlay) {
+    closeModalEditor ();
+  }
+};
 
 const pristine = new Pristine (imgUploadForm, {
   classTo: 'img-upload__field-wrapper',
@@ -33,6 +38,7 @@ function closeModalEditor () {
   body.classList.remove ('modal-open');
   document.removeEventListener('keydown', onEscKeydown);
   imgUploadCancel.removeEventListener ('click', onModalEditorCancelClick);
+  imgUploadOverlay.removeEventListener('click', onClickOutsideEditor);
   imgUploadInput.value = '';
 }
 
@@ -42,6 +48,7 @@ const openModalEditor = () => {
     body.classList.add ('modal-open');
     document.addEventListener('keydown', onEscKeydown);
     imgUploadCancel.addEventListener ('click', onModalEditorCancelClick);
+    imgUploadOverlay.addEventListener('click', onClickOutsideEditor);
   });
 };
 

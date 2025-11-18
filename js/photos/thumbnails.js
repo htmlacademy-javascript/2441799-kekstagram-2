@@ -1,29 +1,32 @@
-import { photoArray } from "../data";
-import { openBigPicture } from "./fullphoto";
+import { openBigPicture } from "./fullphoto.js";
 
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const pictures = document.querySelector('.pictures');
 const picturesFragment = document.createDocumentFragment();
 
-photoArray.forEach (({id, url, description, comments, likes}) => {
-  const picture = pictureTemplate.cloneNode (true);
+let localPhotos;
 
-  picture.dataset.pictureId = id;
-  const image = picture.querySelector('.picture__img');
-  image.src = url;
-  image.alt = description;
-  picture.querySelector('.picture__likes').textContent = likes;
-  picture.querySelector('.picture__comments').textContent = comments.length;
+export const renderCards = (photos) => {
+  localPhotos = [...photos];
+  photos.forEach(({id, url, description, comments, likes}) => {
+    const picture = pictureTemplate.cloneNode (true);
+    picture.dataset.pictureId = id;
+    const image = picture.querySelector('.picture__img');
+    image.src = url;
+    image.alt = description;
+    picture.querySelector('.picture__likes').textContent = likes;
+    picture.querySelector('.picture__comments').textContent = comments.length;
 
-  //обработчик клика
-  picture.addEventListener('click', (evt) => {
-    evt.preventDefault();
-    openBigPicture(id);
+    picturesFragment.appendChild(picture)
   });
+  pictures.appendChild(picturesFragment);
+};
 
-  picturesFragment.appendChild(picture);
+pictures.addEventListener('click', (evt) => {
+  const currentPicture = evt.target.closest('.picture');
+  if(!currentPicture) return;
+
+  const pictureId = Number(currentPicture.dataset.pictureId);
+  const currentPhoto = localPhotos.find((photo) => photo.id === pictureId);
+  openBigPicture(currentPhoto);
 });
-
-pictures.appendChild(picturesFragment);
-
-export {pictures};

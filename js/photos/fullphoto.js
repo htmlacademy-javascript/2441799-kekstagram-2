@@ -1,5 +1,3 @@
-import { photoArray } from "../data";
-
 const bigPicture = document.querySelector ('.big-picture');
 const bigPictureImg = bigPicture.querySelector('.big-picture__img').querySelector('img');
 const likesCount = bigPicture.querySelector('.likes-count');
@@ -19,14 +17,20 @@ const onEscKeydown = (evt) => {
   }
 };
 
+const onClickOutsideBigPicture = (evt) => {
+  if (evt.target === bigPicture) {
+    closeBigPicture();
+  }
+};
+
 const closeBigPicture = () => {
   bigPicture.classList.add ('hidden');
   bigPictureCancel.removeEventListener('click', onBigPictureCancelClick);
   document.removeEventListener('keydown', onEscKeydown);
+  bigPicture.removeEventListener('click', onClickOutsideBigPicture);
 };
 
-const openBigPicture = (pictureId) => {
-  const currentPhoto = photoArray.find((photo) => photo.id === Number (pictureId));
+const openBigPicture = (currentPhoto) => {
   const socialCommentsFragment = document.createDocumentFragment();
 
   bigPictureImg.src = currentPhoto.url;
@@ -51,6 +55,7 @@ const openBigPicture = (pictureId) => {
   bigPictureCancel.addEventListener('click', onBigPictureCancelClick);
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', onEscKeydown);
+  bigPicture.addEventListener('click', onClickOutsideBigPicture);
 };
 
 export {openBigPicture};
