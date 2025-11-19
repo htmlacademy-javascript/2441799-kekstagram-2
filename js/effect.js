@@ -79,3 +79,35 @@ effectSlider.noUiSlider.on('update', ([value]) => {
   imgPreview.style.filter = `${params.filter}(${value}${params.unit})`;
 });
 
+//переключение эффектов
+effectsList.forEach((radio) => {
+  radio.addEventListener ('change', (evt) => {
+    const value = evt.target.value;
+
+    currentEffect = value === 'none' ? 'original' : value;
+
+    const params = EFFECTS[currentEffect];
+
+    //скрываем слайдер, если выбран Оригинал
+    if (currentEffect === 'original') {
+      effectLevelElement.style.display = 'none';
+      imgPreview.style.filter = '';
+      effectValue.value = '';
+      return;
+    }
+    //для остальных эффектов
+    effectLevelElement.style.display = '';
+    effectSlider.noUiSlider.updateOptions ({
+      start: params.max,
+      range: {
+        'min': params.min,
+        'max': params.max
+      },
+      step: params.step
+    });
+
+    effectSlider.noUiSlider.set(params.max); //начальное значение
+    imgPreview.style.filter = `${params.filter}(${params.max}${params.unit})`;
+    effectValue.value = params.max;
+  });
+});
