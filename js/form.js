@@ -1,5 +1,8 @@
 import {validateHashtagFormat, validateHashtagCount, validateHashtagUnique, MAX_HASHTAG_COUNT} from './hashtag-validation.js';
 import {validateCommentLength, MAX_COMMENT_LENGTH} from './comment-validation.js';
+import { controlValue, imgPreview } from './scale.js';
+import { resetEffects } from './effect.js';
+import { resetScale } from './scale.js';
 
 const imgUploadForm = document.querySelector ('.img-upload__form');
 const imgUploadInput = imgUploadForm.querySelector ('.img-upload__input');
@@ -10,6 +13,14 @@ const textHashtags = imgUploadForm.querySelector ('.text__hashtags');
 const textComment = imgUploadForm.querySelector ('.text__description');
 const successMessage = document.querySelector ('#success').content.querySelector('.success');
 const errorMessage = document.querySelector ('#data-error').content.querySelector('.data-error');
+
+function resetEditor() {
+  resetScale();
+  resetEffects();
+  textHashtags.value = '';
+  textComment.value = '';
+  imgUploadInput.value = '';
+};
 
 const onClickOutsideEditor = (evt) => {
   if (evt.target === imgUploadOverlay) {
@@ -36,6 +47,7 @@ const onEscKeydown = (evt) => {
 function closeModalEditor () {
   imgUploadOverlay.classList.add ('hidden');
   body.classList.remove ('modal-open');
+  resetEditor();
   document.removeEventListener('keydown', onEscKeydown);
   imgUploadCancel.removeEventListener ('click', onModalEditorCancelClick);
   imgUploadOverlay.removeEventListener('click', onClickOutsideEditor);

@@ -1,7 +1,7 @@
 const controlSmaller = document.querySelector ('.scale__control--smaller');
 const controlBigger = document.querySelector ('.scale__control--bigger');
-const controlValue = document.querySelector ('.scale__control--value');
-const imgPreview = document.querySelector ('.img-upload__preview');
+export const controlValue = document.querySelector ('.scale__control--value');
+export const imgPreview = document.querySelector ('.img-upload__preview img');
 
 const STEP = 25;
 const MIN_VALUE = 25;
@@ -26,3 +26,8 @@ controlSmaller.addEventListener('click', () => {
   const current = parseInt(controlValue.value, 10);
   updateScale(current - STEP);
 });
+
+export function resetScale () {
+  controlValue.value = DEFAULT_VALUE;
+  imgPreview.style.transform = 'scale(1)';
+};
