@@ -66,15 +66,15 @@ noUiSlider.create(effectSlider, {
 
 //когда слайдер движется, меняется фильтр
 effectSlider.noUiSlider.on('update', ([value]) => {
-  effectValue.value = value;
+  effectValue.value = value; //запись текущего значения эффекта
 
-  const params = EFFECTS[currentEffect];
+  const params = EFFECTS[currentEffect]; //получаем параметры текущего эффекта
 
   if (currentEffect === 'original') {
     imgPreview.style.filter = '';
     return;
   }
-  imgPreview.style.filter = `${params.filter}(${value}${params.unit})`;
+  imgPreview.style.filter = `${params.filter}(${value}${params.unit})`; //применяем фильтр к изображению
 });
 
 //переключение эффектов
