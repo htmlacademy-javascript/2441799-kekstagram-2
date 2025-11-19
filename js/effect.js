@@ -1,8 +1,13 @@
-const imgPreview = document.querySelector ('.img-upload__preview');
-const slider = document.querySelector ('.effect-level__slider');
-const radio = document.querySelector ('.effects__radio');
+import { preview } from "vite";
 
-let currentEffect = 'None';
+const imgPreview = document.querySelector ('.img-upload__preview');
+const effectSlider = document.querySelector ('.effect-level__slider');
+const effectValue = document.querySelector ('.effect-level__value');
+const effectsList = document.querySelector ('.effects__radio');
+const effectLevelElement = document.querySelector ('.img-upload__effect-level');
+
+let currentEffect = 'original'; //по умолчанию эффект оригинал
+effectLevelElement.style.display = 'none'; //по умолчанию прячем слайдер
 
 //настройки эффектов
 const EFFECTS = {
@@ -50,17 +55,27 @@ const EFFECTS = {
   },
 };
 
-//слайдер
-const sliderSetting = noUiSlider.create(slider, {
+//настройки слайдера
+noUiSlider.create(effectSlider, {
   start: 100,
   connect: 'lower',
   range: {
     'min': 0,
     'max': 100
   },
-  step: 1,
-  format: {
-    to: value => Number(value),
-    from: value => Number(value)
-  }
+  step: 1
 });
+
+//когда слайдер движется, меняется фильтр
+effectSlider.noUiSlider.on('update', ([value]) => {
+  effectValue.value = value;
+
+  const params = EFFECTS[currentEffect];
+
+  if (currentEffect === 'original') {
+    imgPreview.style.filter = '';
+    return;
+  }
+  imgPreview.style.filter = `${params.filter}(${value}${params.unit})`;
+});
+
