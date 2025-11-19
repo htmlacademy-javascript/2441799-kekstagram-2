@@ -109,3 +109,25 @@ effectsList.forEach((radio) => {
     effectValue.value = params.max;
   });
 });
+
+//функция сбороса эффекта
+export function resetEffects () {
+  currentEffect = 'original';
+  imgPreview.style.filter = '';
+  effectLevelElement.style.display = 'none';
+  effectValue.value = '';
+  const originalRadio = document.querySelector('#effect-none');
+
+  if (originalRadio) {
+    originalRadio.checked = true;
+  } effectSlider.noUiSlider.updateOptions ({
+    start: 100,
+    range: {
+      min: 0,
+      max: 100
+    },
+    step: 1
+  });
+
+  effectSlider.noUiSlider.set(100);
+};
