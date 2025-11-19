@@ -6,7 +6,7 @@ const imgPreview = document.querySelector ('.img-upload__preview');
 const STEP = 25;
 const MIN_VALUE = 25;
 const MAX_VALUE = 100;
-const DEFAULT_VALUE = 100;
+export const DEFAULT_VALUE = 100;
 
 //обновление масштаба
 export const updateScale = (newValue) => {
@@ -26,5 +26,3 @@ controlSmaller.addEventListener('click', () => {
   const current = parseInt(controlValue.value, 10);
   updateScale(current - STEP);
 });
-
-updateScale(DEFAULT_VALUE);
