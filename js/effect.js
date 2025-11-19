@@ -1,9 +1,7 @@
-import { preview } from "vite";
-
-const imgPreview = document.querySelector ('.img-upload__preview');
+const imgPreview = document.querySelector ('.img-upload__preview img');
 const effectSlider = document.querySelector ('.effect-level__slider');
 const effectValue = document.querySelector ('.effect-level__value');
-const effectsList = document.querySelector ('.effects__radio');
+const effectsList = document.querySelectorAll ('.effects__radio');
 const effectLevelElement = document.querySelector ('.img-upload__effect-level');
 
 let currentEffect = 'original'; //по умолчанию эффект оригинал
