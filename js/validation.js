@@ -1,5 +1,15 @@
+const imgUploadForm = document.querySelector ('.img-upload__form');
 const HASHTAG_REGEX = /^#[a-zа-яё0-9]{1,19}$/i; //регулярное выражени - начинается с #, буквы и цифры, не длиннее 20 символов включая #, не может быть только одна #
 const MAX_HASHTAG_COUNT = 5; //максимум 5 хештегов
+const MAX_COMMENT_LENGTH = 140;
+const textHashtags = imgUploadForm.querySelector ('.text__hashtags');
+const textComment = imgUploadForm.querySelector ('.text__description');
+
+const pristine = new Pristine (imgUploadForm, {
+  classTo: 'img-upload__field-wrapper',
+  errorClass: 'img-upload__field-wrapper--error',
+  errorTextParent: 'img-upload__field-wrapper',
+});
 
 //функция, возвращает массив хештэгов, убирает пробелы в начале и в конце строки, разбиваем строку по одному или несколькими пробелами, убираем пустые элементы
 const hashtagsArray = (value) => {
@@ -28,4 +38,34 @@ const validateHashtagUnique = (value) => {
   return hashtags.length === hashtagsUnique.size;
 };
 
-export {validateHashtagFormat, validateHashtagCount, validateHashtagUnique, MAX_HASHTAG_COUNT};
+const validateCommentLength = (value) => value.length <= MAX_COMMENT_LENGTH;
+
+pristine.addValidator (
+  textHashtags,
+  validateHashtagFormat,
+  'Введён невалидный хэштег: хештэг должен начинаться с #, состоять из букв (латиница и кириллица) и цифр, длинна от 1 до 19 символов, не содержит пробелов или спецсимволов'
+);
+
+pristine.addValidator (
+  textHashtags,
+  validateHashtagCount,
+  `Превышено количество хэштегов, можно указать не более ${MAX_HASHTAG_COUNT}`
+);
+
+pristine.addValidator (
+  textHashtags,
+  validateHashtagUnique,
+  'Хештеги не должны повторяться'
+);
+
+pristine.addValidator (
+  textComment,
+  validateCommentLength,
+  `Комментарий не должен превышать ${MAX_COMMENT_LENGTH} символов`
+);
+
+export const isValid = () => pristine.validate();
+
+export const resetValidation = () => {
+  pristine.reset();
+};

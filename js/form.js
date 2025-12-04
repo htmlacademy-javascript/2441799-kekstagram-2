@@ -1,6 +1,4 @@
-import {validateHashtagFormat, validateHashtagCount, validateHashtagUnique, MAX_HASHTAG_COUNT} from './hashtag-validation.js';
-import {validateCommentLength, MAX_COMMENT_LENGTH} from './comment-validation.js';
-import { controlValue, imgPreview } from './scale.js';
+import {isValid, resetValidation} from './validation.js';
 import { resetEffects } from './effect.js';
 import { resetScale } from './scale.js';
 
@@ -15,11 +13,10 @@ const successMessage = document.querySelector ('#success').content.querySelector
 const errorMessage = document.querySelector ('#data-error').content.querySelector('.data-error');
 
 function resetEditor() {
+  imgUploadForm.reset();
   resetScale();
   resetEffects();
-  textHashtags.value = '';
-  textComment.value = '';
-  imgUploadInput.value = '';
+  resetValidation();
 };
 
 const onClickOutsideEditor = (evt) => {
@@ -27,12 +24,6 @@ const onClickOutsideEditor = (evt) => {
     closeModalEditor ();
   }
 };
-
-const pristine = new Pristine (imgUploadForm, {
-  classTo: 'img-upload__field-wrapper',
-  errorClass: 'img-upload__field-wrapper--error',
-  errorTextParent: 'img-upload__field-wrapper',
-});
 
 const onModalEditorCancelClick = () => {
   closeModalEditor();
@@ -65,11 +56,6 @@ const openModalEditor = () => {
 };
 
 openModalEditor ();
-
-pristine.addValidator (textHashtags, validateHashtagFormat, 'Введён невалидный хэштег: хештэг должен начинаться с #, состоять из букв (латиница и кириллица) и цифр, длинна от 1 до 19 символов, не содержит пробелов или спецсимволов');
-pristine.addValidator (textHashtags, validateHashtagCount, `Превышено количество хэштегов, можно указать не более ${MAX_HASHTAG_COUNT}`);
-pristine.addValidator (textHashtags, validateHashtagUnique, 'Хештеги не должны повторяться');
-pristine.addValidator (textComment, validateCommentLength, `Комментарий не должен превышать ${MAX_COMMENT_LENGTH} символов`);
 
 // если фокус находится в поле ввода хэштега, нажатие на Esc не должно приводить к закрытию формы редактирования изображения.
 textHashtags.addEventListener('keydown', (evt) => {
@@ -121,7 +107,7 @@ function showMessageLoading (template) {
 imgUploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
 
-  if (!pristine.validate()) {
+  if (!isValid()) {
     return;
   }
 
