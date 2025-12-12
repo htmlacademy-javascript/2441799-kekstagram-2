@@ -1,6 +1,8 @@
 import {isValid, resetValidation} from './validation.js';
 import { resetEffects } from './effect.js';
 import { resetScale } from './scale.js';
+import { sendData } from './api.js';
+import { send } from 'vite';
 
 const imgUploadForm = document.querySelector ('.img-upload__form');
 const imgUploadInput = imgUploadForm.querySelector ('.img-upload__input');
@@ -113,17 +115,12 @@ imgUploadForm.addEventListener('submit', (evt) => {
 
   const imgUploadFormData = new FormData(imgUploadForm);
 
-  fetch('https://31.javascript.htmlacademy.pro/kekstagram', {
-    method: 'POST',
-    body: imgUploadFormData
-  }).then((response) => {
-    if (response.ok) {
-      closeModalEditor();
-      showMessageLoading(successMessage);
-    } else {
-      showMessageLoading(errorMessage);
-    }
-  }).catch(() => {
-    showMessageLoading (errorMessage);
-  });
+  sendData(imgUploadFormData)
+   .then(() => {
+    closeModalEditor();
+    showMessageLoading(successMessage);
+   })
+   .catch(() => {
+    showMessageLoading(errorMessage);
+   });
 });
