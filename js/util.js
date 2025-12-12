@@ -1,5 +1,5 @@
 // Функция получения случайного числа
-const getRandomInteger = (a, b) => {
+export const getRandomInteger = (a, b) => {
   const lower = Math.ceil(Math.min(a, b));
   const upper = Math.floor(Math.max(a, b));
   let previousResult = -1;
@@ -15,9 +15,28 @@ const getRandomInteger = (a, b) => {
 };
 
 //Функция поиска случайного элемента в массиве
-const getRandomArrayElement = (elements) => {
+export const getRandomArrayElement = (elements) => {
   const randomIndex = getRandomInteger(0, elements.length - 1)(); // Вызываем сразу
   return elements[randomIndex];
 };
 
-export {getRandomInteger, getRandomArrayElement};
+//Функция вывода ошибок
+export const showAlert = (message) => {
+  const alert = document.createElement ('div');
+  alert.style.position = 'absolute';
+  alert.style.zIndex = '100';
+  alert.style.left = '0';
+  alert.style.top = '0';
+  alert.style.right = '0';
+  alert.style.padding = '10px 3px';
+  alert.style.fontSize = '20px';
+  alert.style.textAlign = 'center';
+  alert.style.backgroundColor = '#fd4d4b';
+  alert.textContent = message;
+
+  document.body.append(alert);
+
+  setTimeout(() => {
+    alert.remove();
+  }, 5000);
+};
