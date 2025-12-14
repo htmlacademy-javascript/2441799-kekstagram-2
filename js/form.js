@@ -2,7 +2,6 @@ import {isValid, resetValidation} from './validation.js';
 import { resetEffects } from './effect.js';
 import { resetScale } from './scale.js';
 import { sendData } from './api.js';
-import { send } from 'vite';
 
 const imgUploadForm = document.querySelector ('.img-upload__form');
 const imgUploadInput = imgUploadForm.querySelector ('.img-upload__input');
@@ -47,6 +46,11 @@ function closeModalEditor () {
   imgUploadInput.value = '';
 }
 
+//обработчик для кнопки сбоса
+imgUploadForm.addEventListener ('reset', () => {
+  resetEditor();
+});
+
 const openModalEditor = () => {
   imgUploadInput.addEventListener ('change', () => {
     imgUploadOverlay.classList.remove ('hidden');
@@ -80,13 +84,13 @@ function showMessageLoading (template) {
 
   const onEscKeydownMessage = (evt) => {
     if (evt.key === 'Escape') {
-      close ();
+      closeMessage ();
     }
   };
 
   const onClickOutsideMessage = (evt) => {
     if (!message.contains(evt.target)) {
-      close ();
+      closeMessage ();
     }
   };
 
