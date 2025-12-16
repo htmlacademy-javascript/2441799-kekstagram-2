@@ -1,4 +1,3 @@
-import {photoArray} from "./data.js";
 import {renderCards} from "./photos/thumbnails.js";
 import './form.js';
 import {updateScale, DEFAULT_VALUE} from './scale.js';
@@ -10,10 +9,8 @@ getData()
 .then((pictures) => {
   renderCards(pictures);
 })
-. catch ((error) => {
-  showAlert(error);
+. catch (() => {
+  showAlert();
 });
 
-console.log (photoArray);
-renderCards(photoArray);
 updateScale(DEFAULT_VALUE);
