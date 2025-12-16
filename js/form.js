@@ -1,6 +1,7 @@
 import {isValid, resetValidation} from './validation.js';
 import { resetEffects } from './effect.js';
 import { resetScale } from './scale.js';
+import { sendData } from './api.js';
 
 const imgUploadForm = document.querySelector ('.img-upload__form');
 const imgUploadInput = imgUploadForm.querySelector ('.img-upload__input');
@@ -10,7 +11,7 @@ const imgUploadCancel = imgUploadForm.querySelector ('.img-upload__cancel');
 const textHashtags = imgUploadForm.querySelector ('.text__hashtags');
 const textComment = imgUploadForm.querySelector ('.text__description');
 const successMessage = document.querySelector ('#success').content.querySelector('.success');
-const errorMessage = document.querySelector ('#data-error').content.querySelector('.data-error');
+const errorMessage = document.querySelector ('#error').content.querySelector('.error');
 
 function resetEditor() {
   imgUploadForm.reset();
@@ -30,7 +31,7 @@ const onModalEditorCancelClick = () => {
 };
 
 const onEscKeydown = (evt) => {
-  if (evt.key === 'Escape') {
+  if (evt.key === 'Escape' && !document.querySelector('.error')) {
     closeModalEditor();
   }
 };
@@ -44,6 +45,11 @@ function closeModalEditor () {
   imgUploadOverlay.removeEventListener('click', onClickOutsideEditor);
   imgUploadInput.value = '';
 }
+
+//обработчик для кнопки сбоса
+imgUploadForm.addEventListener ('reset', () => {
+  resetEditor();
+});
 
 const openModalEditor = () => {
   imgUploadInput.addEventListener ('change', () => {
@@ -72,19 +78,19 @@ textComment.addEventListener('keydown', (evt) => {
 });
 
 //функция для сообщения об ошибках
-function showMessageLoading (template) {
+function showMessageLoading(template) {
   const message = template.cloneNode(true); //клонирование шаблона сообщения
-  body.appendChild(message); //добавить на страницу беред </body>
+  body.appendChild(message); //добавить на страницу перед </body>
 
   const onEscKeydownMessage = (evt) => {
     if (evt.key === 'Escape') {
-      close ();
+      closeMessage();
     }
   };
 
   const onClickOutsideMessage = (evt) => {
-    if (!message.contains(evt.target)) {
-      close ();
+    if (evt.target.classList.contains('error') || evt.target.classList.contains('success')) {
+      closeMessage ();
     }
   };
 
@@ -113,17 +119,12 @@ imgUploadForm.addEventListener('submit', (evt) => {
 
   const imgUploadFormData = new FormData(imgUploadForm);
 
-  fetch('https://31.javascript.htmlacademy.pro/kekstagram', {
-    method: 'POST',
-    body: imgUploadFormData
-  }).then((response) => {
-    if (response.ok) {
-      closeModalEditor();
-      showMessageLoading(successMessage);
-    } else {
-      showMessageLoading(errorMessage);
-    }
-  }).catch(() => {
-    showMessageLoading (errorMessage);
-  });
+  sendData(imgUploadFormData)
+   .then(() => {
+    closeModalEditor();
+    showMessageLoading(successMessage);
+   })
+   .catch(() => {
+    showMessageLoading(errorMessage);
+   });
 });

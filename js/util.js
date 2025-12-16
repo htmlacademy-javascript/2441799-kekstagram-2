@@ -1,23 +1,12 @@
-// Функция получения случайного числа
-const getRandomInteger = (a, b) => {
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
-  let previousResult = -1;
+const DELAY = 5000;
+const alertTemplate = document.querySelector ('#data-error').content.querySelector('.data-error');
 
-  return () => {
-    let result;
-    do {
-      result = Math.floor(Math.random() * (upper - lower + 1)) + lower;
-    } while (result === previousResult); // Исключаем повторение
-    previousResult = result; // Запоминаем предыдущее значение
-    return result;
-  };
+export const showAlert = () => {
+  const alert = alertTemplate.cloneNode(true);
+
+  document.body.append(alert);
+
+  setTimeout(() => {
+    alert.remove();
+  }, DELAY);
 };
-
-//Функция поиска случайного элемента в массиве
-const getRandomArrayElement = (elements) => {
-  const randomIndex = getRandomInteger(0, elements.length - 1)(); // Вызываем сразу
-  return elements[randomIndex];
-};
-
-export {getRandomInteger, getRandomArrayElement};
