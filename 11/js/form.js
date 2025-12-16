@@ -11,7 +11,7 @@ const imgUploadCancel = imgUploadForm.querySelector ('.img-upload__cancel');
 const textHashtags = imgUploadForm.querySelector ('.text__hashtags');
 const textComment = imgUploadForm.querySelector ('.text__description');
 const successMessage = document.querySelector ('#success').content.querySelector('.success');
-const errorMessage = document.querySelector ('#data-error').content.querySelector('.data-error');
+const errorMessage = document.querySelector ('#error').content.querySelector('.error');
 
 function resetEditor() {
   imgUploadForm.reset();
@@ -31,7 +31,7 @@ const onModalEditorCancelClick = () => {
 };
 
 const onEscKeydown = (evt) => {
-  if (evt.key === 'Escape') {
+  if (evt.key === 'Escape' && !document.querySelector('.error')) {
     closeModalEditor();
   }
 };
@@ -78,18 +78,18 @@ textComment.addEventListener('keydown', (evt) => {
 });
 
 //функция для сообщения об ошибках
-function showMessageLoading (template) {
+function showMessageLoading(template) {
   const message = template.cloneNode(true); //клонирование шаблона сообщения
-  body.appendChild(message); //добавить на страницу беред </body>
+  body.appendChild(message); //добавить на страницу перед </body>
 
   const onEscKeydownMessage = (evt) => {
     if (evt.key === 'Escape') {
-      closeMessage ();
+      closeMessage();
     }
   };
 
   const onClickOutsideMessage = (evt) => {
-    if (!message.contains(evt.target)) {
+    if (evt.target.classList.contains('error') || evt.target.classList.contains('success')) {
       closeMessage ();
     }
   };

@@ -1,7 +1,7 @@
 const BASE_URL = 'https://31.javascript.htmlacademy.pro/kekstagram';
 
 const Route = {
-  GET_DATA: 'data',
+  GET_DATA: '/data',
   SEND_DATA: '/',
 };
 
@@ -16,7 +16,7 @@ const ErrorText = {
 };
 
 const load = (route, method = Method.GET, body = null) =>
-  fetch(`${BASE_URL}/${route}`, {method, body})
+  fetch(`${BASE_URL}${route}`, {method, body})
    .then((response) =>
      response.ok ? response.json() : Promise.reject(ErrorText[method])
 );
