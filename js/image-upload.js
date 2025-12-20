@@ -1,5 +1,5 @@
-import { resetEffects } from "./effect";
-import { DEFAULT_VALUE, imgPreview, updateScale } from "./scale";
+import { resetEffects } from "./effect.js";
+import { DEFAULT_VALUE, imgPreview, updateScale } from "./scale.js";
 
 export const initUpload = () => {
   const uploadInput = document.querySelector('.img-upload__input');
