@@ -1,4 +1,5 @@
 import { renderCards } from "./photos/thumbnails.js";
+import { debounce } from "./util.js";
 
 const RANDOM_PICTURES_COUNT = 10;
 const imgFiltersElement = document.querySelector('.img-filters');
@@ -78,12 +79,12 @@ const onFilterClick = (evt) => {
   }
 };
 
+const onFilterClickDebounced = debounce(onFilterClick);
+
 //функция для показа блока фильтров
 export const showImgFilters = () => {
-  if(!imgFiltersElement || !imgFiltersForm) {
-    return;
-  }
+  if(!imgFiltersElement || !imgFiltersForm) return;
 
   imgFiltersElement.classList.remove('img-filters--inactive');
-  imgFiltersForm.addEventListener('click', onFilterClick)
+  imgFiltersForm.addEventListener('click', onFilterClickDebounced);
 };
