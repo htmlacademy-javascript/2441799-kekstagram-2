@@ -3,6 +3,7 @@ import { renderCards } from "./photos/thumbnails";
 const RANDOM_PICTURES_COUNT = 10;
 const imgFiltersElement = document.querySelector('.img-filters');
 const imgFiltersForm = document.querySelector('.img-filters__form');
+let pictures = [];
 
 //функция убирает отрисованные фотографии
 const clearThumbnail = () => {
@@ -27,11 +28,23 @@ const applyRandomFilter = () => {
 
   const randomPictures = pictures
   .slice()
-  .sort(() => Math.random() - 0.5)
+  .sort(() => 0.5 - Math.random())
   .slice(0, RANDOM_PICTURES_COUNT);
 
   renderCards(randomPictures);
 };
+
+//фильтр обсуждаемые
+const applyDiscussedFilter = () => {
+  clearThumbnail();
+
+  const sortedPictures = pictures
+    .slice()
+    .sort((a, b) => b.commens.length - a.comments.length);
+
+    renderCards(sortedPictures);
+};
+
 
 //функция для показа блока фильтров
 export const showImgFilters = () => {
