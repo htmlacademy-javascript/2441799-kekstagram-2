@@ -81,8 +81,13 @@ effectSlider.noUiSlider.on('update', ([value]) => {
 effectsList.forEach((radio) => {
   radio.addEventListener ('change', (evt) => {
     const value = evt.target.value;
-
     currentEffect = value === 'none' ? 'original' : value;
+
+    //обновление radio input только через точное присвоение checked
+    const selectedRadio = document.querySelector(`input[name="effect"][value="${value}"]`);
+    if (selectedRadio) {
+      selectedRadio.checked = true;
+    }
 
     const params = EFFECTS[currentEffect];
 
