@@ -23,24 +23,17 @@ export const initUpload = () => {
       return;
     }
 
-    const reader = new FileReader();
+    const fileURL = URL.createObjectURL(file);
+    imgPreview.src = fileURL;
 
-    reader.addEventListener('load', () => {
-      const fileURL = reader.result;
-      imgPreview.src = fileURL;
-
-      //обновляем миниатюры эффектов
-      const effectsPreviews = document.querySelectorAll('.effects__preview');
-      effectsPreviews.forEach((preview) => {
-        preview.style.backgroundImage = `url(${fileURL})`;
-      });
-
-      //сброс масштаба и эффектов
-      updateScale(DEFAULT_VALUE);
-      resetEffects();
+    //обновляем миниатюры эффектов
+    const effectsPreviews = document.querySelectorAll('.effects__preview');
+    effectsPreviews.forEach((preview) => {
+      preview.style.backgroundImage = `url(${fileURL})`;
     });
 
-    reader.readAsDataURL(file);
+    //сброс масштаба и эффектов
+    updateScale(DEFAULT_VALUE);
+    resetEffects();
   });
-
 };

@@ -17,6 +17,10 @@ const clearThumbnail = () => {
 
 //функция переключает активность кнопки
 const setActiveButton = (button) => {
+  if (!button.classList.contains('img-filters__button')) {
+    return;
+  }
+
   const currentActiveButton = imgFiltersForm.querySelector('.img-filters__button--active');
 
   if (currentActiveButton) {

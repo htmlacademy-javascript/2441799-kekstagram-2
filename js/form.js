@@ -51,17 +51,13 @@ imgUploadForm.addEventListener ('reset', () => {
   resetEditor();
 });
 
-const openModalEditor = () => {
-  imgUploadInput.addEventListener ('change', () => {
-    imgUploadOverlay.classList.remove ('hidden');
-    body.classList.add ('modal-open');
-    document.addEventListener('keydown', onEscKeydown);
-    imgUploadCancel.addEventListener ('click', onModalEditorCancelClick);
-    imgUploadOverlay.addEventListener('click', onClickOutsideEditor);
-  });
-};
-
-openModalEditor ();
+imgUploadInput.addEventListener ('change', () => {
+  imgUploadOverlay.classList.remove ('hidden');
+  body.classList.add ('modal-open');
+  document.addEventListener('keydown', onEscKeydown);
+  imgUploadCancel.addEventListener ('click', onModalEditorCancelClick);
+  imgUploadOverlay.addEventListener('click', onClickOutsideEditor);
+});
 
 // если фокус находится в поле ввода хэштега, нажатие на Esc не должно приводить к закрытию формы редактирования изображения.
 textHashtags.addEventListener('keydown', (evt) => {

@@ -28,6 +28,6 @@ controlSmaller.addEventListener('click', () => {
 });
 
 export function resetScale () {
-  controlValue.value = DEFAULT_VALUE;
+  controlValue.value = `${DEFAULT_VALUE}%`;
   imgPreview.style.transform = 'scale(1)';
 };
