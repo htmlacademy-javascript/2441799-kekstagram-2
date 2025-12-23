@@ -4,8 +4,9 @@ const MAX_HASHTAG_COUNT = 5; //максимум 5 хештегов
 const MAX_COMMENT_LENGTH = 140;
 const textHashtags = imgUploadForm.querySelector ('.text__hashtags');
 const textComment = imgUploadForm.querySelector ('.text__description');
+const submitButton = imgUploadForm.querySelector('#upload-submit');
 
-const pristine = new Pristine (imgUploadForm, {
+const pristine = new Pristine(imgUploadForm, {
   classTo: 'img-upload__field-wrapper',
   errorClass: 'img-upload__field-wrapper--error',
   errorTextParent: 'img-upload__field-wrapper',
@@ -64,8 +65,17 @@ pristine.addValidator (
   `Комментарий не должен превышать ${MAX_COMMENT_LENGTH} символов`
 );
 
+// блокировка кнопки при ошибках валидации
+imgUploadForm.addEventListener('input', () => {
+  const isFormValid = pristine.validate();
+  submitButton.disabled = !isFormValid;
+});
+
+// экспорт функций
 export const isValid = () => pristine.validate();
 
 export const resetValidation = () => {
   pristine.reset();
+  submitButton.disabled = false; // сброс блокировки кнопки
 };
+
