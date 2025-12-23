@@ -5,7 +5,7 @@ const effectsList = document.querySelectorAll ('.effects__radio');
 const effectLevelElement = document.querySelector ('.img-upload__effect-level');
 
 let currentEffect = 'original'; //по умолчанию эффект оригинал
-effectLevelElement.style.display = 'none'; //по умолчанию прячем слайдер
+effectLevelElement.classList.add('hidden');
 
 //настройки эффектов
 const EFFECTS = {
@@ -88,13 +88,13 @@ effectsList.forEach((radio) => {
 
     //скрываем слайдер, если выбран Оригинал
     if (currentEffect === 'original') {
-      effectLevelElement.style.display = 'none';
+      effectLevelElement.classList.add('hidden');
       imgPreview.style.filter = '';
       effectValue.value = '';
       return;
     }
     //для остальных эффектов
-    effectLevelElement.style.display = '';
+    effectLevelElement.classList.remove('hidden');
     effectSlider.noUiSlider.updateOptions ({
       start: params.max,
       range: {
@@ -114,7 +114,7 @@ effectsList.forEach((radio) => {
 export function resetEffects () {
   currentEffect = 'original';
   imgPreview.style.filter = '';
-  effectLevelElement.style.display = 'none';
+  effectLevelElement.classList.add('hidden');
   effectValue.value = '';
   const originalRadio = document.querySelector('#effect-none');
 
