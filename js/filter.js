@@ -62,8 +62,6 @@ const onFilterClick = (evt) => {
     return;
   }
 
-  setActiveButton(evt.target);
-
   switch (evt.target.id) {
     case 'filter-default':
     applyDefaultFilter();
@@ -86,5 +84,8 @@ export const showImgFilters = () => {
   if(!imgFiltersElement || !imgFiltersForm) return;
 
   imgFiltersElement.classList.remove('img-filters--inactive');
-  imgFiltersForm.addEventListener('click', onFilterClickDebounced);
+  imgFiltersForm.addEventListener('click', (evt) => {
+    setActiveButton(evt.target);
+    onFilterClickDebounced(evt);
+  });
 };
