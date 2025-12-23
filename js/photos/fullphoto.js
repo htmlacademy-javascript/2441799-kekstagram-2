@@ -4,6 +4,7 @@ const likesCount = bigPicture.querySelector('.likes-count');
 const socialComments = bigPicture.querySelector('.social__comments');
 const socialCommentTemplate = socialComments.querySelector('.social__comment');
 const socialCommentTotalCount = bigPicture.querySelector('.social__comment-total-count');
+const socialCommentShowCount = bigPicture.querySelector('.social__comment-shown-count');
 const commentsCaption = bigPicture.querySelector('.social__caption');
 const commentsCount = bigPicture.querySelector('.social__comment-count');
 const commentsLoader = bigPicture.querySelector('.social__comments-loader');
@@ -54,7 +55,11 @@ const renderComments = () => {
   // Обновление счётчика комментариев
   commentsCount.textContent = `${showComments} из ${currentComments.length} комментариев`;
 
-  //отражаем общее количество комментариев в отдельном span
+  //отображаем отдельно количество показанных и общее число комментариев
+  if (socialCommentShowCount) {
+    socialCommentShowCount.textContent = `${showComments}`;
+  }
+
   if (socialCommentTotalCount) {
     socialCommentTotalCount.textContent = `${currentComments.length}`;
   }
