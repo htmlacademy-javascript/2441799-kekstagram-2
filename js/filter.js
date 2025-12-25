@@ -1,21 +1,21 @@
-import { renderCards } from "./photos/thumbnails.js";
-import { debounce } from "./util.js";
+import { renderCards } from './photos/thumbnails.js';
+import { debounce } from './util.js';
 
 const RANDOM_PICTURES_COUNT = 10;
+
 const imgFiltersElement = document.querySelector('.img-filters');
 const imgFiltersForm = document.querySelector('.img-filters__form');
 
 export let pictures = [];
+
 export const setPictures = (data) => {
   pictures = data;
 };
 
-//функция убирает отрисованные фотографии
 const clearThumbnail = () => {
   document.querySelectorAll('.picture').forEach((element) => element.remove());
 };
 
-//функция переключает активность кнопки
 const setActiveButton = (button) => {
   if (!button.classList.contains('img-filters__button')) {
     return;
@@ -30,26 +30,23 @@ const setActiveButton = (button) => {
   button.classList.add('img-filters__button--active');
 };
 
-//фильтр по-умолчанию
 const applyDefaultFilter = () => {
   clearThumbnail();
 
   renderCards(pictures);
 };
 
-//фильтр случайные
 const applyRandomFilter = () => {
   clearThumbnail();
 
   const randomPictures = pictures
-  .slice()
-  .sort(() => 0.5 - Math.random())
-  .slice(0, RANDOM_PICTURES_COUNT);
+    .slice()
+    .sort(() => 0.5 - Math.random())
+    .slice(0, RANDOM_PICTURES_COUNT);
 
   renderCards(randomPictures);
 };
 
-//фильтр обсуждаемые
 const applyDiscussedFilter = () => {
   clearThumbnail();
 
@@ -60,32 +57,32 @@ const applyDiscussedFilter = () => {
   renderCards(sortedPictures);
 };
 
-//обработчик клика на фильтры
 const onFilterClick = (evt) => {
-  if(!evt.target.classList.contains('img-filters__button')) {
+  if (!evt.target.classList.contains('img-filters__button')) {
     return;
   }
 
   switch (evt.target.id) {
     case 'filter-default':
-    applyDefaultFilter();
-    break;
+      applyDefaultFilter();
+      break;
 
     case 'filter-random':
-    applyRandomFilter();
-    break;
+      applyRandomFilter();
+      break;
 
     case 'filter-discussed':
-    applyDiscussedFilter();
-    break;
+      applyDiscussedFilter();
+      break;
   }
 };
 
 const onFilterClickDebounced = debounce(onFilterClick);
 
-//функция для показа блока фильтров
 export const showImgFilters = () => {
-  if(!imgFiltersElement || !imgFiltersForm) return;
+  if (!imgFiltersElement || !imgFiltersForm) {
+    return;
+  }
 
   imgFiltersElement.classList.remove('img-filters--inactive');
   imgFiltersForm.addEventListener('click', (evt) => {
