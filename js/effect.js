@@ -61,7 +61,15 @@ noUiSlider.create(effectSlider, {
     'min': 0,
     'max': 100
   },
-  step: 1
+  step: 1,
+  format: {
+    to: function (value) {
+      return parseFloat(value);
+    },
+    from: function (value) {
+      return parseFloat(value);
+    },
+  }
 });
 
 //когда слайдер движется, меняется фильтр
