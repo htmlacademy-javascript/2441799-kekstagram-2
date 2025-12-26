@@ -6,7 +6,7 @@ const RANDOM_PICTURES_COUNT = 10;
 const imgFiltersElement = document.querySelector('.img-filters');
 const imgFiltersForm = document.querySelector('.img-filters__form');
 
-export let pictures = [];
+let pictures = [];
 
 export const setPictures = (data) => {
   pictures = data;
